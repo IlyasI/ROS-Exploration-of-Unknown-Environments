@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="use_sim_time" type="bool" value="true" />
+  <rosparam param="clock_send_rate">40</rosparam>
+  <rosparam param="time_scale_factor">1</rosparam>
+  <arg name="map_file" default="$(find comp313p_resources)/maps/simple_plus.yaml"/>
+  <arg name="goal_file" default="$(find comp313p_cw2)/scenarios/simple_maps/simple_plus_goal.txt"/>
+  
+  <param name="plan_scale" value="2" />
+
+  <node pkg="comp313p_time_server" name="time_server" type="time_server_node.py"/>
+  <node pkg="comp313p_the_boss" name="the_boss" type="boss_node.py" args="$(arg goal_file)" output="screen"/>
+  <node pkg="comp313p_reactive_planner_controller" name="planner_controller" type="planner_controller_node.py" output="screen"/>
+
+  <include file="$(find stdr_robot)/launch/robot_manager.launch" />
+  
+  <node type="stdr_server_node" pkg="stdr_server" name="stdr_server" output="screen" args="$(arg map_file)"/>
+
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  
+  <node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0  world map 100" />
+  
+  <node pkg="stdr_robot" type="robot_handler" name="robby" args="add $(find comp313p_resources)/resources/robots/tiny_pandora_robot.yaml 2 2 0" />
+
+    <include file="$(find comp313p_mapper)/launch/mapper.launch" />
+
+</launch>

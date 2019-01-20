@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+
+import rospy
+
+from comp313p_mapper.mapper_node import MapperNode
+
+if __name__ == '__main__':
+    try:
+        mapperNode = MapperNode()
+        mapperNode.run()
+    except rospy.ROSInterruptException:
+        pass

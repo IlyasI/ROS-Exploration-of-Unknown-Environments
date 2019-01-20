@@ -1,0 +1,8 @@
+prefix=/home/ros_user/catkin_final/install
+
+Name: stdr_resources
+Description: Description of stdr_resources
+Version: 0.3.2
+Cflags: 
+Libs: -L/home/ros_user/catkin_final/install/lib 
+Requires: 

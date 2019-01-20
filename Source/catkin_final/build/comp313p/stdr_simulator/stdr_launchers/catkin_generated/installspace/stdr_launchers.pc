@@ -1,0 +1,8 @@
+prefix=/home/ros_user/catkin_final/install
+
+Name: stdr_launchers
+Description: Description of stdr_launchers
+Version: 0.3.2
+Cflags: 
+Libs: -L/home/ros_user/catkin_final/install/lib 
+Requires: 

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="map" default="$(find comp313p_resources)/maps/factory.yaml"/>
+	<include file="$(find stdr_robot)/launch/robot_manager.launch" />
+	
+	<node type="stdr_server_node" pkg="stdr_server" name="stdr_server" output="screen" args="$(arg map)"/>
+
+	<node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0  world map 100" />
+	
+	<include file="$(find stdr_gui)/launch/stdr_gui.launch"/>
+	
+	<node pkg="stdr_robot" type="robot_handler" name="$(anon robot_spawn)" args="add $(find stdr_resources)/resources/robots/pandora_robot.yaml 2 7 0" />
+	
+	<node pkg="comp313p_example" type="moving_the_robot.py" name="example_script" output="screen"/>
+
+</launch>

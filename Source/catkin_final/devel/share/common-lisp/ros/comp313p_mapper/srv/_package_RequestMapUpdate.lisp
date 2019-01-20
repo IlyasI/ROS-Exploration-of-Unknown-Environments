@@ -1,0 +1,6 @@
+(cl:in-package comp313p_mapper-srv)
+(cl:export '(DELTAOCCUPANCYGRIDREQUIRED-VAL
+          DELTAOCCUPANCYGRIDREQUIRED
+          INITIALMAPUPDATE-VAL
+          INITIALMAPUPDATE
+))

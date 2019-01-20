@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+
+import rospy
+
+from comp313p_explorer.explorer_node import ExplorerNode
+
+if __name__ == '__main__':
+    try:
+        explorerNode = ExplorerNode()
+        explorerNode.run()
+    except rospy.ROSInterruptException:
+        pass

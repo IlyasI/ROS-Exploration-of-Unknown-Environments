@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="use_sim_time" type="bool" value="true" />
+  <param name="enable_change_mapper_state" type="bool" value="true" />
+  <param name="remove_goal_cell_from_path_if_occupied" type="bool" value="false" />
+  <rosparam param="clock_send_rate">40</rosparam>
+  <rosparam param="time_scale_factor">1</rosparam>
+  <arg name="map_file" default="$(find comp313p_resources)/maps/factory.yaml"/>
+  <arg name="goal_file" default="$(find comp313p_cw2)/scenarios/factory/s02_goals.txt"/>
+
+  <node pkg="comp313p_time_server" name="time_server" type="time_server_node.py"/>
+
+  <include file="$(find stdr_robot)/launch/robot_manager.launch" />
+  
+  <node type="stdr_server_node" pkg="stdr_server" name="stdr_server" output="screen" args="$(arg map_file)"/>
+
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  
+  <node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0  world map 100" />
+  
+  <node pkg="stdr_robot" type="robot_handler" name="robby" args="add $(find comp313p_resources)/resources/robots/tiny_pandora_robot.yaml 2 9.5 0" />
+
+  <node pkg="comp313p_reactive_planner_controller" name="planner_controller" type="planner_controller_node.py" output="screen"/>
+    <include file="$(find comp313p_mapper)/launch/mapper.launch" />
+    <include file="$(find comp313p_explorer)/launch/explorer.launch" />
+</launch>
